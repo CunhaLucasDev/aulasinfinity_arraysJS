@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de Arrays em JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { margin: 5px; padding: 10px; }
+        #output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Exemplos Interativos de Arrays em JavaScript</h1>
+    <p>Clique nos botões para ver exemplos de arrays funcionando!</p>
+    
+    <button onclick="exemploBasico()">Exemplo Básico de Array</button>
+    <button onclick="exemploMetodos()">Métodos de Array</button>
+    <button onclick="exemploMultidimensional()">Array Multidimensional</button>
+    <button onclick="exemploIteracao()">Iteração com forEach</button>
+    <button onclick="exemploFilterMap()">Filter e Map</button>
+    
+    <div id="output"></div>
+    
+    <script>
+        function log(texto) {
+            document.getElementById('output').innerHTML += '<p>' + texto + '</p>';
+        }
+        
+        function limpar() {
+            document.getElementById('output').innerHTML = '';
+        }
+        
+        function exemploBasico() {
+            limpar();
+            let frutas = ['maçã', 'banana', 'laranja'];
+            log('Array criado: ' + frutas.join(', '));
+            log('Primeiro elemento: ' + frutas[0]);
+            log('Comprimento: ' + frutas.length);
+            frutas.push('uva');
+            log('Após push: ' + frutas.join(', '));
+        }
+        
+        function exemploMetodos() {
+            limpar();
+            let numeros = [10, 20, 30, 40, 50];
+            log('Array original: ' + numeros.join(', '));
+            log('Pop (remove último): ' + numeros.pop() + ' - Array: ' + numeros.join(', '));
+            log('Shift (remove primeiro): ' + numeros.shift() + ' - Array: ' + numeros.join(', '));
+            numeros.unshift(5);
+            log('Unshift (adiciona no início): ' + numeros.join(', '));
+        }
+        
+        function exemploMultidimensional() {
+            limpar();
+            let matriz = [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+            ];
+            log('Matriz 2D:');
+            for (let i = 0; i < matriz.length; i++) {
+                log('Linha ' + i + ': ' + matriz[i].join(', '));
+            }
+            log('Elemento [1][2]: ' + matriz[1][2]);
+        }
+        
+        function exemploIteracao() {
+            limpar();
+            let cores = ['vermelho', 'azul', 'verde'];
+            log('Iterando com forEach:');
+            cores.forEach((cor, index) => {
+                log('Índice ' + index + ': ' + cor);
+            });
+        }
+        
+        function exemploFilterMap() {
+            limpar();
+            let nums = [1, 2, 3, 4, 5, 6];
+            log('Array original: ' + nums.join(', '));
+            let pares = nums.filter(n => n % 2 === 0);
+            log('Pares (filter): ' + pares.join(', '));
+            let quadrados = nums.map(n => n * n);
+            log('Quadrados (map): ' + quadrados.join(', '));
+        }
+    </script>
+</body>
+</html>

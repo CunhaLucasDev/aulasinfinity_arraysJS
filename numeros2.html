@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Números - Lista Interativa</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { margin: 5px; padding: 8px; }
+        button { margin: 5px; padding: 10px; }
+        #lista { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+        #resultado { margin-top: 20px; padding: 10px; border: 1px solid #ddd; background: #e9e9e9; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Números Interativa</h1>
+    <p>Digite um número e clique em "Adicionar" para incluí-lo na lista. Depois, escolha o cálculo desejado.</p>
+    
+    <input type="number" id="numeroInput" placeholder="Digite um número">
+    <button onclick="adicionarNumero()">Adicionar</button>
+    <button onclick="limparLista()">Limpar Lista</button>
+    
+    <div id="lista">
+        <h3>Números na Lista:</h3>
+        <ul id="listaNumeros"></ul>
+    </div>
+    
+    <h3>Escolha o Cálculo:</h3>
+    <button onclick="calcular('soma')">Soma</button>
+    <button onclick="calcular('media')">Média</button>
+    <button onclick="calcular('minimo')">Mínimo</button>
+    <button onclick="calcular('maximo')">Máximo</button>
+    <button onclick="calcular('desvio')">Desvio Padrão</button>
+    
+    <div id="resultado"></div>
+    
+    <script>
+        let listaNumeros = [];
+        
+        function adicionarNumero() {
+            const input = document.getElementById('numeroInput');
+            const numero = parseFloat(input.value);
+            
+            if (isNaN(numero)) {
+                alert('Por favor, digite um número válido.');
+                return;
+            }
+            
+            listaNumeros.push(numero);
+            atualizarLista();
+            input.value = ''; // Limpar input
+        }
+        
+        function atualizarLista() {
+            const ul = document.getElementById('listaNumeros');
+            ul.innerHTML = '';
+            listaNumeros.forEach(num => {
+                const li = document.createElement('li');
+                li.textContent = num;
+                ul.appendChild(li);
+            });
+        }
+        
+        function calcular(tipo) {
+            if (listaNumeros.length === 0) {
+                document.getElementById('resultado').innerHTML = '<p>Adicione números primeiro!</p>';
+                return;
+            }
+            
+            let resultado = '';
+            switch (tipo) {
+                case 'soma':
+                    const soma = listaNumeros.reduce((acc, num) => acc + num, 0);
+                    resultado = `Soma: ${soma}`;
+                    break;
+                case 'media':
+                    const somaMedia = listaNumeros.reduce((acc, num) => acc + num, 0);
+                    const media = somaMedia / listaNumeros.length;
+                    resultado = `Média: ${media.toFixed(2)}`;
+                    break;
+                case 'minimo':
+                    const minimo = Math.min(...listaNumeros);
+                    resultado = `Mínimo: ${minimo}`;
+                    break;
+                case 'maximo':
+                    const maximo = Math.max(...listaNumeros);
+                    resultado = `Máximo: ${maximo}`;
+                    break;
+                case 'desvio':
+                    const mediaDesvio = listaNumeros.reduce((acc, num) => acc + num, 0) / listaNumeros.length;
+                    const variancia = listaNumeros.reduce((acc, num) => acc + Math.pow(num - mediaDesvio, 2), 0) / listaNumeros.length;
+                    const desvio = Math.sqrt(variancia);
+                    resultado = `Desvio Padrão: ${desvio.toFixed(2)}`;
+                    break;
+            }
+            
+            document.getElementById('resultado').innerHTML = `<h3>Resultado:</h3><p>${resultado}</p>`;
+        }
+        
+        function limparLista() {
+            listaNumeros = [];
+            atualizarLista();
+            document.getElementById('resultado').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
