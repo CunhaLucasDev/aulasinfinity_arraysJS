@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendendo Funções e Listas em JavaScript</title>
+    <style> 
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+        input { margin: 5px; padding: 8px; }
+        #output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; min-height: 100px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        h2 { color: #333; }
+        h3 { color: #666; }
+    </style>
+</head>
+<body>  
+    <h1>Aprendendo Funções e Listas em JavaScript</h1>
+    
+    <!-- SEÇÃO 1: Tipos de Funções -->
+    <div class="section">
+        <h2>1. Tipos de Funções</h2>
+        <p>Clique nos botões para ver diferentes tipos de funções:</p>
+        <button onclick="funcaoSimples()">Função Simples</button>
+        <button onclick="funcaoComParametros()">Função com Parâmetros</button>
+        <button onclick="funcaoComRetorno()">Função com Retorno</button>
+        <button onclick="arrowFunction()">Arrow Function</button>
+    </div>
+    
+    <!-- SEÇÃO 2: Funções com Listas -->
+    <div class="section">
+        <h2>2. Funções que Manipulam Listas</h2>
+        <input type="text" id="itemInput" placeholder="Digite um item">
+        <button onclick="adicionarItem()">Adicionar à Lista</button>
+        <button onclick="removerUltimo()">Remover Último</button>
+        <button onclick="ordenarLista()">Ordenar Lista</button>
+        <button onclick="limparTudo()">Limpar Tudo</button>
+        <h3>Lista atual:</h3>
+        <ul id="listaItens"></ul>
+    </div>
+    
+    <!-- SEÇÃO 3: Funções de Busca e Filtro -->
+    <div class="section">
+        <h2>3. Funções de Busca e Filtro</h2>
+        <input type="text" id="buscaInput" placeholder="Buscar na lista">
+        <button onclick="buscarItem()">Buscar</button>
+        <button onclick="filtrarItens()">Filtrar</button>
+        <button onclick="contarItens()">Contar Itens</button>
+    </div>
+    
+    <!-- SEÇÃO 4: Funções com Callbacks -->
+    <div class="section">
+        <h2>4. Funções com Callbacks (forEach, map, filter)</h2>
+        <button onclick="exemploForEach()">forEach</button>
+        <button onclick="exemploMap()">map</button>
+        <button onclick="exemploFilter()">filter</button>
+        <button onclick="exemploReduce()">reduce</button>
+    </div>
+    
+    <div id="output"></div>
+    
+    <script>
+        // Array global para armazenar itens
+        let lista = ['maçã', 'banana', 'laranja'];
+        
+        // Função auxiliar para exibir texto na tela
+        function log(texto) {
+            document.getElementById('output').innerHTML += '<p>' + texto + '</p>';
+        }
+        
+        // Função auxiliar para limpar a saída
+        function limpar() {
+            document.getElementById('output').innerHTML = '';
+        }
+        
+        // Função para atualizar a lista na tela
+        function atualizarLista() {
+            const ul = document.getElementById('listaItens');
+            ul.innerHTML = '';
+            lista.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${index}: ${item}`;
+                ul.appendChild(li);
+            });
+        }
+        
+        // ===============================
+        // SEÇÃO 1: TIPOS DE FUNÇÕES
+        // ===============================
+        
+        // Função simples (sem parâmetros, sem retorno)
+        function funcaoSimples() {
+            limpar();
+            log('🔵 FUNÇÃO SIMPLES:');
+            log('function saudacao() { ... }');
+            log('Resultado: Olá! Eu sou uma função simples!');
+        }
+        
+        // Função com parâmetros
+        function funcaoComParametros() {
+            limpar();
+            log('🟢 FUNÇÃO COM PARÂMETROS:');
+            log('function soma(a, b) { return a + b; }');
+            
+            function soma(a, b) {
+                return a + b;
+            }
+            
+            log('soma(5, 3) = ' + soma(5, 3));
+            log('soma(10, 20) = ' + soma(10, 20));
+        }
+        
+        // Função com retorno
+        function funcaoComRetorno() {
+            limpar();
+            log('🟡 FUNÇÃO COM RETORNO:');
+            log('function dobro(n) { return n * 2; }');
+            
+            function dobro(n) {
+                return n * 2;
+            }
+            
+            log('dobro(5) = ' + dobro(5));
+            log('dobro(15) = ' + dobro(15));
+        }
+        
+        // Arrow Function (ES6)
+        function arrowFunction() {
+            limpar();
+            log('🟣 ARROW FUNCTION (ES6):');
+            log('const quadrado = (n) => n * n;');
+            
+            const quadrado = (n) => n * n;
+            const triplo = n => n * 3;
+            const somar = (a, b) => a + b;
+            
+            log('quadrado(4) = ' + quadrado(4));
+            log('triplo(5) = ' + triplo(5));
+            log('somar(3, 7) = ' + somar(3, 7));
+        }
+        
+        // ===============================
+        // SEÇÃO 2: FUNÇÕES COM LISTAS
+        // ===============================
+        
+        function adicionarItem() {
+            const input = document.getElementById('itemInput');
+            const item = input.value.trim();
+            
+            if (item === '') {
+                alert('Digite um item!');
+                return;
+            }
+            
+            lista.push(item); // Adiciona ao final do array
+            input.value = '';
+            atualizarLista();
+            limpar();
+            log('✅ Item "' + item + '" adicionado usando push()');
+        }
+        
+        function removerUltimo() {
+            if (lista.length === 0) {
+                alert('Lista vazia!');
+                return;
+            }
+            
+            const removido = lista.pop(); // Remove o último item
+            atualizarLista();
+            limpar();
+            log('❌ Item "' + removido + '" removido usando pop()');
+        }
+        
+        function ordenarLista() {
+            lista.sort(); // Ordena alfabeticamente
+            atualizarLista();
+            limpar();
+            log('📋 Lista ordenada usando sort()');
+        }
+        
+        function limparTudo() {
+            lista = [];
+            atualizarLista();
+            limpar();
+            log('🗑️ Lista limpa!');
+        }
+        
+        // ===============================
+        // SEÇÃO 3: FUNÇÕES DE BUSCA
+        // ===============================
+        
+        function buscarItem() {
+            const busca = document.getElementById('buscaInput').value.trim().toLowerCase();
+            
+            if (busca === '') {
+                alert('Digite algo para buscar!');
+                return;
+            }
+            
+            const encontrado = lista.find(item => item.toLowerCase().includes(busca));
+            limpar();
+            
+            if (encontrado) {
+                log('🔍 Encontrado: "' + encontrado + '" usando find()');
+            } else {
+                log('🔍 Nenhum item encontrado com "' + busca + '"');
+            }
+        }
+        
+        function filtrarItens() {
+            const busca = document.getElementById('buscaInput').value.trim().toLowerCase();
+            
+            if (busca === '') {
+                alert('Digite algo para filtrar!');
+                return;
+            }
+            
+            const filtrados = lista.filter(item => item.toLowerCase().includes(busca));
+            limpar();
+            log('🔎 Itens filtrados usando filter():');
+            log(filtrados.length > 0 ? filtrados.join(', ') : 'Nenhum resultado');
+        }
+        
+        function contarItens() {
+            limpar();
+            log('📊 Total de itens na lista: ' + lista.length);
+            log('Lista atual: [' + lista.join(', ') + ']');
+        }
+        
+        // ===============================
+        // SEÇÃO 4: CALLBACKS
+        // ===============================
+        
+        function exemploForEach() {
+            limpar();
+            log('🔄 forEach - Executa função para cada item:');
+            log('lista.forEach((item, index) => { ... })');
+            log('---');
+            lista.forEach((item, index) => {
+                log(`Índice ${index}: ${item}`);
+            });
+        }
+        
+        function exemploMap() {
+            limpar();
+            log('🔄 map - Transforma cada item e retorna novo array:');
+            log('lista.map(item => item.toUpperCase())');
+            log('---');
+            const maiusculas = lista.map(item => item.toUpperCase());
+            log('Original: [' + lista.join(', ') + ']');
+            log('Transformado: [' + maiusculas.join(', ') + ']');
+        }
+        
+        function exemploFilter() {
+            limpar();
+            log('🔄 filter - Filtra itens que passam no teste:');
+            log('lista.filter(item => item.length > 5)');
+            log('---');
+            const longos = lista.filter(item => item.length > 5);
+            log('Original: [' + lista.join(', ') + ']');
+            log('Filtrado (mais de 5 letras): [' + longos.join(', ') + ']');
+        }
+        
+        function exemploReduce() {
+            limpar();
+            log('🔄 reduce - Reduz array a um único valor:');
+            log('lista.reduce((acc, item) => acc + item.length, 0)');
+            log('---');
+            const totalLetras = lista.reduce((acc, item) => acc + item.length, 0);
+            log('Lista: [' + lista.join(', ') + ']');
+            log('Total de letras em todos os itens: ' + totalLetras);
+        }
+        
+        // Inicializa a lista ao carregar a página
+        atualizarLista();
+    </script>
+</body>
+</html>

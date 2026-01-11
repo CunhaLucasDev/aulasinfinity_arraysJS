@@ -1,0 +1,44 @@
+//estou aprendendo funções em JavaScript</title>
+    <style> 
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { margin: 5px; padding: 10px; }
+        #output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }   
+    </style>
+</head>
+<body>  
+    <h1>Exemplos de Funções em JavaScript</h1>
+    <p>Clique nos botões para ver exemplos de funções funcionando!</p>
+    
+    <button onclick="exemploSimples()">Função Simples</button>
+    <button onclick="exemploParametros(5, 10)">Função com Parâmetros</button>
+    <button onclick="exemploRetorno()">Função com Retorno</button>
+    <button onclick="exemploArrowFunction()">Arrow Function</button>
+    <button onclick="exemploCallback()">Função Callback</button>
+    
+    <div id="output"></div>
+    
+    <script>
+        function log(texto) {
+            document.getElementById('output').innerHTML += '<p>' + texto + '</p>';
+        }
+        
+        function limpar() {
+            document.getElementById('output').innerHTML = '';
+        }
+        
+        function exemploSimples() {
+            limpar();
+            function saudacao() {
+                log('Olá! Esta é uma função simples.');
+            }
+            saudacao();
+        }
+        
+        function exemploParametros(a, b) {
+            limpar();
+            function soma(x, y) {
+                return x + y;
+            }
+            const resultado = soma(a, b);
+            log('A soma de ' + a + ' e ' + b + ' é: ' + resultado);
+        }

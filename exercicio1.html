@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Nomes</title>
+  </head>
+  <body>
+    <h1>Nomes</h1>
+
+    <div>
+      <input type="text" id="nome" placeholder="Digite um nome" />
+      <button onclick="handleAdicionarNome()">Adicionar</button>
+    </div>
+
+    <ul id="nomes"></ul>
+
+    <script>
+      const nomes = [];
+
+      function handleAdicionarNome() {
+        // 1. Buscar o valor do Input "nome"
+        const nomeInput = document.getElementById('nome');
+        const nome = nomeInput.value.trim();
+        
+        // Verificar se o nome não está vazio
+        if (nome === '') {
+          alert('Por favor, digite um nome válido.');
+          return;
+        }
+        
+        // Capitalizar a primeira letra de cada palavra
+        // davi silva
+        // ['davi', 'silva'] => ['Davi', 'Silva'] => 'Davi Silva'
+        const nomeCapitalizado = nome.split(' ').map(palavra => 
+          palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()
+        ).join(' ');
+        
+        // 2. Adicionar o Nome na Lista
+        nomes.push(nomeCapitalizado);
+        
+        // Limpar o input após adicionar
+        nomeInput.value = '';
+        
+        // 3. Chamar a função "handleMostrarNomes"
+        handleMostrarNomes();
+      }
+
+      function handleMostrarNomes() {
+        // 1. Buscar a Lista (ul) no HTML e armazenar em uma variavel
+        const ul = document.getElementById('nomes');
+        
+        // 2. Limpar variavel da ul de nomes
+        ul.innerHTML = '';
+        
+        // 3. Percorrer o array de nomes, e para cada nome, adicionar um <li>
+        nomes.forEach(nome => {
+          const li = document.createElement('li');
+          li.textContent = nome;
+          ul.appendChild(li);
+        });
+      }
+    </script>
+  </body>
+</html>
+```
